@@ -1,0 +1,25 @@
+{
+  "overview": "Ledgerly is a personal financial planning and execution system that records income and expenses, allocates money by budget percentage, reports across periods, tracks projects, business finances and debt, and exports backups.",
+  "features": [
+    "Record income and expenses with categories, dates and notes",
+    "Dashboard with balance, income, expenses, net and budget progress",
+    "Percentage-based budget allocation validated against expected income",
+    "Daily, weekly, monthly and annual reports that reconcile with records",
+    "Spending alerts derived from real recorded data",
+    "Projects with funding targets, contributions and remaining funding",
+    "Separate business revenue, costs, profit and cash flow tracking",
+    "Debt tracking with payments that reduce balances",
+    "Export and restore of financial records",
+    "Private per-user data with sign-in",
+    "Responsive layout for desktop, tablet and mobile"
+  ],
+  "category": "personal-finance",
+  "tags": [
+    "finance",
+    "budgeting",
+    "planning",
+    "expenses",
+    "reports"
+  ],
+  "last_updated": "2026-10-29T10:41:32.914Z"
+}

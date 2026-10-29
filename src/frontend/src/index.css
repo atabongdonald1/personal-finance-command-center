@@ -1,0 +1,191 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Fraunces";
+  src: url("/assets/fonts/Fraunces.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Satoshi";
+  src: url("/assets/fonts/Satoshi.woff2") format("woff2");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/assets/fonts/JetBrainsMono.woff2") format("woff2");
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --font-display: "Fraunces", serif;
+    --font-body: "Satoshi", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --radius: 0.75rem;
+
+    /* Quiet Ledger — warm paper light theme */
+    --background: 0.985 0.008 85;
+    --foreground: 0.22 0.02 60;
+    --card: 1 0.004 85;
+    --card-foreground: 0.22 0.02 60;
+    --popover: 1 0.004 85;
+    --popover-foreground: 0.22 0.02 60;
+
+    --primary: 0.42 0.084 178;
+    --primary-foreground: 0.98 0.006 178;
+
+    --secondary: 0.94 0.014 85;
+    --secondary-foreground: 0.3 0.02 60;
+    --muted: 0.955 0.012 85;
+    --muted-foreground: 0.5 0.018 65;
+
+    --accent: 0.68 0.145 62;
+    --accent-foreground: 0.2 0.03 62;
+
+    --destructive: 0.52 0.19 27;
+    --destructive-foreground: 0.98 0.006 27;
+
+    --success: 0.55 0.13 158;
+    --success-foreground: 0.98 0.006 158;
+    --warning: 0.72 0.15 78;
+    --warning-foreground: 0.22 0.03 78;
+
+    --border: 0.9 0.014 80;
+    --input: 0.9 0.014 80;
+    --ring: 0.42 0.084 178;
+
+    --chart-1: 0.5 0.1 178;
+    --chart-2: 0.68 0.145 62;
+    --chart-3: 0.58 0.11 155;
+    --chart-4: 0.6 0.12 250;
+    --chart-5: 0.55 0.14 25;
+
+    --sidebar: 0.965 0.012 82;
+    --sidebar-foreground: 0.28 0.02 60;
+    --sidebar-primary: 0.42 0.084 178;
+    --sidebar-primary-foreground: 0.98 0.006 178;
+    --sidebar-accent: 0.93 0.016 82;
+    --sidebar-accent-foreground: 0.28 0.02 60;
+    --sidebar-border: 0.89 0.014 80;
+    --sidebar-ring: 0.42 0.084 178;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.42 0.084 178),
+      oklch(0.36 0.07 190)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.99 0.008 85),
+      oklch(0.965 0.012 82)
+    );
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .dark {
+    --background: 0.17 0.012 175;
+    --foreground: 0.93 0.008 85;
+    --card: 0.21 0.014 175;
+    --card-foreground: 0.93 0.008 85;
+    --popover: 0.21 0.014 175;
+    --popover-foreground: 0.93 0.008 85;
+
+    --primary: 0.72 0.11 175;
+    --primary-foreground: 0.17 0.012 175;
+
+    --secondary: 0.26 0.016 175;
+    --secondary-foreground: 0.85 0.008 85;
+    --muted: 0.26 0.016 175;
+    --muted-foreground: 0.62 0.012 80;
+
+    --accent: 0.75 0.14 62;
+    --accent-foreground: 0.18 0.02 62;
+
+    --destructive: 0.62 0.18 27;
+    --destructive-foreground: 0.17 0.012 27;
+
+    --success: 0.68 0.13 158;
+    --success-foreground: 0.17 0.012 158;
+    --warning: 0.78 0.14 78;
+    --warning-foreground: 0.18 0.02 78;
+
+    --border: 0.31 0.016 175;
+    --input: 0.31 0.016 175;
+    --ring: 0.72 0.11 175;
+
+    --chart-1: 0.72 0.11 175;
+    --chart-2: 0.75 0.14 62;
+    --chart-3: 0.68 0.12 155;
+    --chart-4: 0.68 0.12 250;
+    --chart-5: 0.65 0.15 25;
+
+    --sidebar: 0.19 0.013 175;
+    --sidebar-foreground: 0.9 0.008 85;
+    --sidebar-primary: 0.72 0.11 175;
+    --sidebar-primary-foreground: 0.17 0.012 175;
+    --sidebar-accent: 0.25 0.016 175;
+    --sidebar-accent-foreground: 0.9 0.008 85;
+    --sidebar-border: 0.29 0.016 175;
+    --sidebar-ring: 0.72 0.11 175;
+
+    --gradient-primary: linear-gradient(
+      135deg,
+      oklch(0.72 0.11 175),
+      oklch(0.62 0.1 190)
+    );
+    --gradient-subtle: linear-gradient(
+      180deg,
+      oklch(0.19 0.013 175),
+      oklch(0.16 0.012 175)
+    );
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-body antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+  }
+  .tabular-nums,
+  .font-mono {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+@layer utilities {
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+  .bg-gradient-primary {
+    background-image: var(--gradient-primary);
+  }
+  .bg-gradient-subtle {
+    background-image: var(--gradient-subtle);
+  }
+  .text-gradient-primary {
+    background-image: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .shadow-subtle {
+    box-shadow: 0 1px 2px oklch(0.22 0.02 60 / 0.05), 0 1px 3px
+      oklch(0.22 0.02 60 / 0.04);
+  }
+  .shadow-elevated {
+    box-shadow: 0 4px 12px oklch(0.22 0.02 60 / 0.07), 0 1px 3px
+      oklch(0.22 0.02 60 / 0.05);
+  }
+  .label-caps {
+    @apply text-xs font-semibold uppercase tracking-widest text-muted-foreground;
+  }
+}

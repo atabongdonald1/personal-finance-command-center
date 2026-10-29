@@ -1,0 +1,343 @@
+// Version: 4.0.0
+type AccessControlState__201339279 =
+  {
+    var adminAssigned : Bool;
+    userRoles : Map__230067015<Principal, UserRole__91647283>
+  };
+type BudgetCategory__191856700 =
+  {
+    allocated : Money__698460738;
+    id : RecordId__634517021;
+    name : Text;
+    owner : Principal;
+    percentage : Nat
+  };
+type BudgetCategory__345554145 =
+  {
+    allocated : Money__477146989;
+    id : RecordId__502375809;
+    name : Text;
+    owner : Principal;
+    percentage : Nat
+  };
+type BudgetPeriod__214028505 = {#annual; #daily; #monthly; #weekly};
+type BudgetPeriod__278094903 = {#annual; #daily; #monthly; #weekly};
+type BudgetSettings__390795042 =
+  {
+    expectedIncome : Money__477146989;
+    owner : Principal;
+    period : BudgetPeriod__214028505;
+    updatedAt : Timestamp__771871407
+  };
+type BudgetSettings__423911899 =
+  {
+    expectedIncome : Money__698460738;
+    owner : Principal;
+    period : BudgetPeriod__278094903;
+    updatedAt : Timestamp__301639476
+  };
+type BusinessKind__307132697 = {#cost; #revenue};
+type BusinessKind__526270394 = {#cost; #revenue};
+type BusinessRecord__447515180 =
+  {
+    amount : Money__477146989;
+    category : Text;
+    date : Timestamp__771871407;
+    id : RecordId__502375809;
+    kind : BusinessKind__526270394;
+    note : Text;
+    owner : Principal
+  };
+type BusinessRecord__916229899 =
+  {
+    amount : Money__698460738;
+    category : Text;
+    date : Timestamp__301639476;
+    id : RecordId__634517021;
+    kind : BusinessKind__307132697;
+    note : Text;
+    owner : Principal
+  };
+type Data__44217153<K, V> = {var count : Nat__227979830; kvs : [var ?(K, V)]};
+type DebtPayment__701621124 =
+  {
+    amount : Money__477146989;
+    date : Timestamp__771871407;
+    debtId : RecordId__502375809;
+    id : RecordId__502375809;
+    note : Text;
+    owner : Principal
+  };
+type DebtPayment__817698390 =
+  {
+    amount : Money__698460738;
+    date : Timestamp__301639476;
+    debtId : RecordId__634517021;
+    id : RecordId__634517021;
+    note : Text;
+    owner : Principal
+  };
+type Debt__167150612 =
+  {
+    balance : Money__698460738;
+    createdAt : Timestamp__301639476;
+    id : RecordId__634517021;
+    interestRate : ?Float;
+    name : Text;
+    owner : Principal;
+    updatedAt : Timestamp__301639476
+  };
+type Debt__202157431 =
+  {
+    balance : Money__477146989;
+    createdAt : Timestamp__771871407;
+    id : RecordId__502375809;
+    interestRate : ?Float;
+    name : Text;
+    owner : Principal;
+    updatedAt : Timestamp__771871407
+  };
+type EntryKind__780744679 = {#expense; #income};
+type EntryKind__856523852 = {#expense; #income};
+type FinancialEntry__185857428 =
+  {
+    amount : Money__698460738;
+    category : Text;
+    createdAt : Timestamp__301639476;
+    date : Timestamp__301639476;
+    id : RecordId__634517021;
+    kind : EntryKind__856523852;
+    note : Text;
+    owner : Principal;
+    updatedAt : Timestamp__301639476
+  };
+type FinancialEntry__304794491 =
+  {
+    amount : Money__477146989;
+    category : Text;
+    createdAt : Timestamp__771871407;
+    date : Timestamp__771871407;
+    id : RecordId__502375809;
+    kind : EntryKind__780744679;
+    note : Text;
+    owner : Principal;
+    updatedAt : Timestamp__771871407
+  };
+type Internal__283199666<K, V> =
+  {children : [var ?Node__204828119<K, V>]; data : Data__44217153<K, V>};
+type Leaf__598469445<K, V> = {data : Data__44217153<K, V>};
+type Map__230067015<K, V> = Map__405889023<K, V>;
+type Map__405889023<K, V> = Map__603270868<K, V>;
+type Map__603270868<K, V> =
+  {var root : Node__204828119<K, V>; var size : Nat__227979830};
+type Money__477146989 = Int;
+type Money__698460738 = Int;
+type Nat__227979830 = Nat__920180692;
+type Nat__920180692 = Nat;
+type NewActor__769816496 =
+  {
+    accessControlState : AccessControlState__201339279;
+    budgetCategories :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809,
+                                      BudgetCategory__345554145>>;
+    budgetSettings : Map__230067015<Principal, BudgetSettings__390795042>;
+    businessRecords :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809,
+                                      BusinessRecord__447515180>>;
+    contributions :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809,
+                                      ProjectContribution__665386281>>;
+    debtPayments :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809,
+                                      DebtPayment__701621124>>;
+    debts :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809, Debt__202157431>>;
+    entries :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809,
+                                      FinancialEntry__304794491>>;
+    nextIds : Map__230067015<Principal, NextIds__464597549>;
+    projectExpenses :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809,
+                                      ProjectExpense__592425588>>;
+    projects :
+      Map__230067015<Principal,
+                      Map__230067015<RecordId__502375809, Project__38822762>>
+  };
+type NextIds__464597549 =
+  {
+    var budgetCategory : RecordId__502375809;
+    var businessRecord : RecordId__502375809;
+    var contribution : RecordId__502375809;
+    var debt : RecordId__502375809;
+    var debtPayment : RecordId__502375809;
+    var entry : RecordId__502375809;
+    var project : RecordId__502375809;
+    var projectExpense : RecordId__502375809
+  };
+type Node__204828119<K, V> =
+  {#internal : Internal__283199666<K, V>; #leaf : Leaf__598469445<K, V>};
+type OldActor__512397517 = {};
+type ProjectContribution__665386281 =
+  {
+    amount : Money__477146989;
+    date : Timestamp__771871407;
+    id : RecordId__502375809;
+    note : Text;
+    owner : Principal;
+    projectId : RecordId__502375809
+  };
+type ProjectContribution__90676231 =
+  {
+    amount : Money__698460738;
+    date : Timestamp__301639476;
+    id : RecordId__634517021;
+    note : Text;
+    owner : Principal;
+    projectId : RecordId__634517021
+  };
+type ProjectExpense__366286068 =
+  {
+    amount : Money__698460738;
+    category : Text;
+    date : Timestamp__301639476;
+    id : RecordId__634517021;
+    note : Text;
+    owner : Principal;
+    projectId : RecordId__634517021
+  };
+type ProjectExpense__592425588 =
+  {
+    amount : Money__477146989;
+    category : Text;
+    date : Timestamp__771871407;
+    id : RecordId__502375809;
+    note : Text;
+    owner : Principal;
+    projectId : RecordId__502375809
+  };
+type Project__38822762 =
+  {
+    createdAt : Timestamp__771871407;
+    description : Text;
+    id : RecordId__502375809;
+    name : Text;
+    owner : Principal;
+    target : Money__477146989;
+    updatedAt : Timestamp__771871407
+  };
+type Project__90470498 =
+  {
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : RecordId__634517021;
+    name : Text;
+    owner : Principal;
+    target : Money__698460738;
+    updatedAt : Timestamp__301639476
+  };
+type RecordId__502375809 = Nat;
+type RecordId__634517021 = Nat;
+type Timestamp__301639476 = Int;
+type Timestamp__771871407 = Int;
+type UserRole__91647283 = {#admin; #guest; #user};
+{
+  "00000000_000000" : OldActor__512397517 -> NewActor__769816496
+}
+actor  {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__230067015<Principal, UserRole__91647283>
+    };
+  stable budgetCategories :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         BudgetCategory__191856700>>;
+      var size : Nat__227979830
+    };
+  stable budgetSettings :
+    {
+      var root : Node__204828119<Principal, BudgetSettings__423911899>;
+      var size : Nat__227979830
+    };
+  stable businessRecords :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         BusinessRecord__916229899>>;
+      var size : Nat__227979830
+    };
+  stable contributions :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         ProjectContribution__90676231>>;
+      var size : Nat__227979830
+    };
+  stable debtPayments :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         DebtPayment__817698390>>;
+      var size : Nat__227979830
+    };
+  stable debts :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021, Debt__167150612>>;
+      var size : Nat__227979830
+    };
+  stable entries :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         FinancialEntry__185857428>>;
+      var size : Nat__227979830
+    };
+  stable nextIds :
+    {
+      var root :
+        Node__204828119<Principal,
+                         {
+                           var budgetCategory : RecordId__634517021;
+                           var businessRecord : RecordId__634517021;
+                           var contribution : RecordId__634517021;
+                           var debt : RecordId__634517021;
+                           var debtPayment : RecordId__634517021;
+                           var entry : RecordId__634517021;
+                           var project : RecordId__634517021;
+                           var projectExpense : RecordId__634517021
+                         }>;
+      var size : Nat__227979830
+    };
+  stable projectExpenses :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         ProjectExpense__366286068>>;
+      var size : Nat__227979830
+    };
+  stable projects :
+    {
+      var root :
+        Node__204828119<Principal,
+                         Map__230067015<RecordId__634517021,
+                                         Project__90470498>>;
+      var size : Nat__227979830
+    }
+};

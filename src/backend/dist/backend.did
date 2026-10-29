@@ -1,0 +1,428 @@
+type Value = 
+ variant {
+   "bool": bool;
+   float: float64;
+   "int": int;
+   "nat": nat;
+   "null";
+   "text": text;
+ };
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type Timestamp = int;
+type SpendingAlert = 
+ record {
+   allocated: Money;
+   category: text;
+   message: text;
+   severity: AlertSeverity;
+   spent: Money;
+ };
+type Result__1 = 
+ variant {
+   err: Error;
+   ok;
+ };
+type Result = 
+ record {
+   hasMore: bool;
+   rows: vec vec Cell;
+ };
+type RecordId = nat;
+type ProjectFunding = 
+ record {
+   contributed: Money;
+   projectId: RecordId;
+   remaining: Money;
+   spent: Money;
+   target: Money;
+ };
+type ProjectExpense = 
+ record {
+   amount: Money;
+   category: text;
+   date: Timestamp;
+   id: RecordId;
+   note: text;
+   owner: principal;
+   projectId: RecordId;
+ };
+type ProjectContribution = 
+ record {
+   amount: Money;
+   date: Timestamp;
+   id: RecordId;
+   note: text;
+   owner: principal;
+   projectId: RecordId;
+ };
+type Project = 
+ record {
+   createdAt: Timestamp;
+   description: text;
+   id: RecordId;
+   name: text;
+   owner: principal;
+   target: Money;
+   updatedAt: Timestamp;
+ };
+type Money = int;
+type LedgerlyResult_9 = 
+ variant {
+   err: LedgerlyError;
+   ok: ProjectExpense;
+ };
+type LedgerlyResult_8 = 
+ variant {
+   err: LedgerlyError;
+   ok: ProjectFunding;
+ };
+type LedgerlyResult_7 = 
+ variant {
+   err: LedgerlyError;
+   ok: DebtPayment;
+ };
+type LedgerlyResult_6 = 
+ variant {
+   err: LedgerlyError;
+   ok;
+ };
+type LedgerlyResult_5 = 
+ variant {
+   err: LedgerlyError;
+   ok: BudgetSettings;
+ };
+type LedgerlyResult_4 = 
+ variant {
+   err: LedgerlyError;
+   ok: BudgetCategory;
+ };
+type LedgerlyResult_3 = 
+ variant {
+   err: LedgerlyError;
+   ok: BusinessRecord;
+ };
+type LedgerlyResult_2 = 
+ variant {
+   err: LedgerlyError;
+   ok: Debt;
+ };
+type LedgerlyResult_10 = 
+ variant {
+   err: LedgerlyError;
+   ok: ProjectContribution;
+ };
+type LedgerlyResult_1 = 
+ variant {
+   err: LedgerlyError;
+   ok: FinancialEntry;
+ };
+type LedgerlyResult = 
+ variant {
+   err: LedgerlyError;
+   ok: Project;
+ };
+type LedgerlyError = 
+ variant {
+   invalidAmount: text;
+   invalidInput: text;
+   invalidPercentage: text;
+   notAuthorized;
+   notFound: RecordId;
+   overAllocated: record {
+                    allocated: Money;
+                    expectedIncome: Money;
+                  };
+ };
+type FinancialReport = 
+ record {
+   byCategory: vec record {
+                     text;
+                     Money;
+                   };
+   expenses: Money;
+   from: Timestamp;
+   income: Money;
+   net: Money;
+   period: BudgetPeriod;
+   to: Timestamp;
+ };
+type FinancialEntry = 
+ record {
+   amount: Money;
+   category: text;
+   createdAt: Timestamp;
+   date: Timestamp;
+   id: RecordId;
+   kind: EntryKind;
+   note: text;
+   owner: principal;
+   updatedAt: Timestamp;
+ };
+type Error = 
+ variant {
+   AmbiguousAttribute: record {
+                         field: text;
+                         sources: vec text;
+                       };
+   FrontendOriginMismatch: record {
+                             expected: vec text;
+                             got: text;
+                           };
+   FrontendOriginsNotConfigured;
+   MalformedCandid;
+   MissingField: text;
+   MixedSsoSources: record {
+                      otherKeys: vec text;
+                      ssoKeys: vec text;
+                    };
+   NoAttributes;
+   Stale: record {ageNs: nat;};
+   UnknownNonce;
+   UntrustedSsoSource: record {domain: text;};
+ };
+type EntryKind = 
+ variant {
+   expense;
+   income;
+ };
+type EntryFilter = 
+ record {
+   category: opt text;
+   from: opt Timestamp;
+   kind: opt EntryKind;
+   to: opt Timestamp;
+ };
+type DebtWithBalance = 
+ record {
+   debt: Debt;
+   remaining: Money;
+ };
+type DebtSummary = 
+ record {
+   debts: vec DebtWithBalance;
+   totalOutstanding: Money;
+ };
+type DebtPayment = 
+ record {
+   amount: Money;
+   date: Timestamp;
+   debtId: RecordId;
+   id: RecordId;
+   note: text;
+   owner: principal;
+ };
+type Debt = 
+ record {
+   balance: Money;
+   createdAt: Timestamp;
+   id: RecordId;
+   interestRate: opt float64;
+   name: text;
+   owner: principal;
+   updatedAt: Timestamp;
+ };
+type Cell = 
+ record {
+   name: text;
+   value: Value;
+ };
+type BusinessSummary = 
+ record {
+   cashFlow: Money;
+   costs: Money;
+   profit: Money;
+   revenue: Money;
+ };
+type BusinessRecord = 
+ record {
+   amount: Money;
+   category: text;
+   date: Timestamp;
+   id: RecordId;
+   kind: BusinessKind;
+   note: text;
+   owner: principal;
+ };
+type BusinessKind = 
+ variant {
+   cost;
+   revenue;
+ };
+type BudgetSettings = 
+ record {
+   expectedIncome: Money;
+   owner: principal;
+   period: BudgetPeriod;
+   updatedAt: Timestamp;
+ };
+type BudgetPeriod = 
+ variant {
+   annual;
+   daily;
+   monthly;
+   weekly;
+ };
+type BudgetCategory = 
+ record {
+   allocated: Money;
+   id: RecordId;
+   name: text;
+   owner: principal;
+   percentage: nat;
+ };
+type BackupData = 
+ record {
+   budgetCategories: vec BudgetCategory;
+   budgetSettings: opt BudgetSettings;
+   businessRecords: vec BusinessRecord;
+   contributions: vec ProjectContribution;
+   debtPayments: vec DebtPayment;
+   debts: vec Debt;
+   entries: vec FinancialEntry;
+   exportedAt: Timestamp;
+   projectExpenses: vec ProjectExpense;
+   projects: vec Project;
+ };
+type AlertSeverity = 
+ variant {
+   critical;
+   info;
+   warning;
+ };
+service : {
+  _initialize_access_control: () -> ();
+  _internet_identity_sign_in_finish: () -> (Result__1);
+  _internet_identity_sign_in_start: () -> (blob);
+  /// Record a business revenue or cost for the caller.
+  addBusinessRecord: (kind: BusinessKind, amount: Money, date: Timestamp,
+   category: text, note: text) -> (LedgerlyResult_3);
+  /// Record a contribution toward one of the caller's projects.
+  addContribution: (projectId: RecordId, amount: Money, date: Timestamp,
+   note: text) -> (LedgerlyResult_10);
+  /// Record an expense charged against one of the caller's projects. The
+  /// expense is stored only in the project-expense collection, never in the
+  /// personal entry or business record collections.
+  addProjectExpense: (projectId: RecordId, amount: Money, date: Timestamp,
+   category: text, note: text) -> (LedgerlyResult_9);
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  /// Create a named budget category taking `percentage` of expected income.
+  createBudgetCategory: (name: text, percentage: nat) -> (LedgerlyResult_4);
+  /// Create a debt owned by the caller.
+  createDebt: (name: text, balance: Money, interestRate: opt float64) ->
+   (LedgerlyResult_2);
+  /// Create an income or expense entry for the caller.
+  createEntry: (kind: EntryKind, amount: Money, date: Timestamp, category:
+   text, note: text) -> (LedgerlyResult_1);
+  /// Create a project owned by the caller.
+  createProject: (name: text, target: Money, description: text) ->
+   (LedgerlyResult);
+  /// Delete one of the caller's budget categories.
+  deleteBudgetCategory: (id: RecordId) -> (LedgerlyResult_6);
+  /// Delete one of the caller's business records.
+  deleteBusinessRecord: (id: RecordId) -> (LedgerlyResult_6);
+  /// Delete one of the caller's debts. Its recorded payments are removed with
+  /// it. Another owner's id is reported as not found.
+  deleteDebt: (debtId: RecordId) -> (LedgerlyResult_6);
+  /// Delete one of the caller's entries. Fails with `#notFound` when the id is
+  /// not owned by the caller.
+  deleteEntry: (id: RecordId) -> (LedgerlyResult_6);
+  /// Delete one of the caller's projects together with its contributions and
+  /// project expenses. Only the caller's own records are touched.
+  deleteProject: (projectId: RecordId) -> (LedgerlyResult_6);
+  execute: (qJson: text) -> (Result) query;
+  /// Export the caller's records as a portable snapshot. The snapshot contains
+  /// only the caller's own data.
+  exportBackup: () -> (BackupData) query;
+  getApiDoc: () -> (text) query;
+  /// The caller's budget settings, or null when none are configured.
+  getBudgetSettings: () -> (opt BudgetSettings) query;
+  /// Compute the caller's business summary from business records only.
+  /// 
+  /// `revenue` is the sum of revenue records, `costs` the sum of cost records,
+  /// `profit` is revenue minus costs, and `cashFlow` is the same net movement
+  /// of business money. Personal income and expenses are never included.
+  getBusinessSummary: (from: opt Timestamp, to: opt Timestamp) ->
+   (BusinessSummary) query;
+  getCallerUserRole: () -> (UserRole) query;
+  /// A reconciled report for the caller over the requested window. `period` is
+  /// the reporting label; `from`/`to` are inclusive nanosecond bounds.
+  getFinancialReport: (period: BudgetPeriod, from: Timestamp, to:
+   Timestamp) -> (FinancialReport) query;
+  /// Read one of the caller's projects.
+  getProject: (projectId: RecordId) -> (LedgerlyResult) query;
+  /// Compute the funding summary for one of the caller's projects.
+  getProjectFunding: (projectId: RecordId) -> (LedgerlyResult_8) query;
+  /// Spending alerts derived from the caller's actual recorded data: one alert
+  /// per budget category whose spending approaches or exceeds its allocation,
+  /// plus an alert when total spending approaches or exceeds expected income.
+  getSpendingAlerts: (from: Timestamp, to: Timestamp) ->
+   (vec SpendingAlert) query;
+  isCallerAdmin: () -> (bool) query;
+  /// The caller's categories with allocated amounts derived from current
+  /// expected income.
+  listBudgetCategories: () -> (vec BudgetCategory) query;
+  /// List the caller's business records, optionally filtered to an inclusive
+  /// date range. A `null` bound leaves that side unbounded.
+  listBusinessRecords: (from: opt Timestamp, to: opt Timestamp) ->
+   (vec BusinessRecord) query;
+  /// List the caller's contributions, optionally filtered to one project.
+  listContributions: (projectId: opt RecordId) ->
+   (vec ProjectContribution) query;
+  /// List the caller's debt payments, optionally filtered to one debt.
+  listDebtPayments: (debtId: opt RecordId) -> (vec DebtPayment) query;
+  /// List the caller's debts with their remaining balances and the total
+  /// outstanding debt.
+  /// 
+  /// `debt.balance` is already the outstanding balance: `recordDebtPayment`
+  /// reduces it by the payment amount when the payment is recorded. The
+  /// remaining balance is therefore reported directly, without subtracting the
+  /// recorded payments a second time.
+  listDebts: () -> (DebtSummary) query;
+  /// List the caller's entries, most recent first, with optional filters.
+  listEntries: (filter: EntryFilter) -> (vec FinancialEntry) query;
+  /// List the caller's project expenses, optionally filtered to one project.
+  listProjectExpenses: (projectId: opt RecordId) ->
+   (vec ProjectExpense) query;
+  /// List every project owned by the caller.
+  listProjects: () -> (vec Project) query;
+  /// Record a payment against one of the caller's debts. The debt's balance is
+  /// reduced by the payment amount, and the payment is recorded so available
+  /// cash reflects debt payments made. A payment larger than the outstanding
+  /// balance is rejected with the shared invalid-amount error.
+  recordDebtPayment: (debtId: RecordId, amount: Money, date: Timestamp, note:
+   text) -> (LedgerlyResult_7);
+  /// Restore the caller's records from a snapshot, replacing the caller's
+  /// existing collections. Every restored record is owned by the caller, and id
+  /// counters advance past the restored ids so new records never collide.
+  restoreBackup: (data: BackupData) -> (LedgerlyResult_6);
+  schema: () -> (text) query;
+  /// Set the caller's expected income budget and reporting period. Recalculates
+  /// every category allocation from the new expected income. Rejected when the
+  /// existing categories would over-allocate the new income.
+  setBudgetSettings: (expectedIncome: Money, period: BudgetPeriod) ->
+   (LedgerlyResult_5);
+  /// Update a category's name and percentage. Changing the percentage
+  /// recalculates that category's allocated amount from current expected income.
+  updateBudgetCategory: (id: RecordId, name: text, percentage: nat) ->
+   (LedgerlyResult_4);
+  /// Update one of the caller's business records. The record must belong to the
+  /// caller; another owner's id is reported as not found.
+  updateBusinessRecord: (id: RecordId, kind: BusinessKind, amount: Money,
+   date: Timestamp, category: text, note: text) -> (LedgerlyResult_3);
+  /// Update one of the caller's debts. Another owner's id is reported as not
+  /// found.
+  updateDebt: (debtId: RecordId, name: text, balance: Money, interestRate:
+   opt float64) -> (LedgerlyResult_2);
+  /// Update one of the caller's entries. Fails with `#notFound` when the id is
+  /// not owned by the caller.
+  updateEntry: (id: RecordId, kind: EntryKind, amount: Money, date:
+   Timestamp, category: text, note: text) -> (LedgerlyResult_1);
+  /// Update one of the caller's projects. Only the supplied fields change.
+  updateProject: (projectId: RecordId, name: text, target: Money,
+   description: text) -> (LedgerlyResult);
+}
